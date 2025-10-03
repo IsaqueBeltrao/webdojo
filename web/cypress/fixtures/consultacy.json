@@ -1,0 +1,49 @@
+{
+    "Personal": {
+        "name": "Isaque Beltrão",
+        "email": "papito@webdojo.com.br",
+        "phone": "11 99999-1000",
+        "personType": "cpf",
+        "consultacyType": "Individual",
+        "document": "11289395098",
+        "discoveryChannel": [
+            "Instagram",
+            "YouTube",
+            "LinkedIn",
+            "Indicação de Amigo",
+            "Udemy"
+        ],
+        "file": "./cypress/fixtures/document.pdf",
+        "describe": "Lorem ipsum dolor sit amet,",
+        "techs": [
+            "Playwright",
+            "Cypress",
+            "Robort Framework",
+            "Maestro",
+            "Appium",
+            "Jenkins",
+            "Bruno",
+            "Selenium",
+            "WebdriverIO"
+        ],
+        "terms": true
+    },
+    "Company": {
+        "name": "Isaque Beltrão",
+        "email": "papito@webdojo.com.br",
+        "phone": "11 99999-1000",
+        "personType": "cnpj",
+        "consultacyType": "In Company",
+        "document": "01119594000117",
+        "discoveryChannel": [
+            "LinkedIn"
+        ],
+        "file": "./cypress/fixtures/document.pdf",
+        "describe": "Lorem ipsum dolor sit amet,",
+        "techs": [
+            "Cypress"
+        ],
+        "terms": true
+    }
+}
+
