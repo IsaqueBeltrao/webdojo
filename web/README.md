@@ -1,149 +1,331 @@
-# WebDojo — Suite de Testes (Cypress)
+# Webdojo - Testes Automatizados com Cypress
 
-> Documentação rápida do projeto de testes automatizados da aplicação WebDojo usando Cypress.
+Este projeto contém uma suíte completa de testes automatizados para a aplicação Webdojo, desenvolvida utilizando Cypress como framework de automação de testes.
 
-## Visão geral
+## 📋 Índice
 
-Este repositório contém os testes end-to-end para a aplicação WebDojo, implementados com Cypress.
-Os testes ficam na pasta `cypress/` e usam fixtures, comandos customizados e helpers em `cypress/support`.
+- [Visão Geral](#visão-geral)
+- [Pré-requisitos](#pré-requisitos)
+- [Instalação](#instalação)
+- [Executando a Aplicação](#executando-a-aplicação)
+- [Executando os Testes](#executando-os-testes)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Comandos Customizados](#comandos-customizados)
+- [Fixtures](#fixtures)
+- [Configurações](#configurações)
+- [Cenários de Teste](#cenários-de-teste)
+- [Contribuição](#contribuição)
 
-Estrutura importante (resumida)
+## 🎯 Visão Geral
 
-- `cypress/e2e/` — specs de teste (ex.: `login.cy.js`, `alerts.cy.js`, `cep.cy.js`)
-- `cypress/fixtures/` — dados de teste (ex.: `cep.json`)
-- `cypress/support/` — comandos customizados e utilitários (`commands.js`, `utils.js`, `actions/`)
-- `cypress.config.js` — configuração principal do Cypress
-- `package.json` — scripts úteis para execução
+O Webdojo é uma aplicação web educacional focada no ensino de automação de testes. Este projeto de testes automatizados cobre diversos cenários e funcionalidades da aplicação, incluindo:
 
-## Pré-requisitos
+- ✅ Autenticação e login
+- ✅ Formulários complexos
+- ✅ Interações com elementos da interface
+- ✅ Validações de dados
+- ✅ Testes responsivos (desktop e mobile)
+- ✅ Upload de arquivos
+- ✅ Integração com APIs externas
 
-- Node.js (recomendado >= 16)
-- npm (ou yarn)
-- Browsers suportados pelo Playwright (Cypress abrirá o browser instalado no sistema)
+## 🔧 Pré-requisitos
 
-## Executando a aplicação (pré-requisito)
+Antes de executar os testes, certifique-se de ter instalado:
 
-A aplicação WebDojo está no mesmo repositório e precisa estar servida para que os testes rodem.
-Use o script abaixo para subir a aplicação localmente (porta 3000):
+- **Node.js** (versão 16 ou superior)
+- **npm** ou **yarn**
+- **Cypress** (será instalado automaticamente)
 
-```powershell
+## 📦 Instalação
+
+1. Clone o repositório:
+```bash
+git clone <url-do-repositorio>
+cd webdojo/web
+```
+
+2. Instale as dependências:
+```bash
+npm install
+# ou
+yarn install
+```
+
+## 🚀 Executando a Aplicação
+
+Para executar a aplicação Webdojo localmente:
+
+```bash
 npm run dev
 ```
 
-Isso executa `serve -s dist -p 3000` — certifique-se de que a build (`dist`) está disponível quando necessário.
+A aplicação estará disponível em: `http://localhost:3000`
 
-## Scripts úteis
+## 🧪 Executando os Testes
 
-Os scripts definidos no `package.json` deste projeto de testes:
-
-```json
-"scripts": {
-  "dev": "serve -s dist -p 3000",
-  "test": "npx cypress run --config viewportWidth=1440,viewportHeight=900",
-  "test:login": "npx cypress run --spec cypress/e2e/login.cy.js --config viewportWidth=1440,viewportHeight=900",
-  "test:login:mobile": "npx cypress run --spec cypress/e2e/login.cy.js --config viewportWidth=375,viewportHeight=667"
-}
+### Executar Todos os Testes
+```bash
+npm run test
 ```
 
-- `npm run dev` — inicia a aplicação (necessário antes de rodar os testes se a app não estiver em outro ambiente)
-- `npm test` — executa toda a suíte em cabeça-less com viewport de desktop 1440x900
-- `npm run test:login` — executa somente o spec de login (desktop)
-- `npm run test:login:mobile` — executa o spec de login em viewport móvel (simulação)
-
-## Rodando os testes localmente
-
-- Abrir o Test Runner (modo interativo):
-
-```powershell
-npx cypress open
-```
-
-- Executar a suíte em headless (útil para CI):
-
-```powershell
-npm test
-```
-
-- Executar um spec específico (ex.: login) em modo headless:
-
-```powershell
+### Executar Testes de Login (Desktop)
+```bash
 npm run test:login
 ```
 
-Observação: os scripts já configuram `viewportWidth` e `viewportHeight` para reproduzir as resoluções esperadas.
+### Executar Testes de Login (Mobile)
+```bash
+npm run test:login:mobile
+```
 
-## Estrutura dos testes e convenções
+### Executar Testes Específicos
+```bash
+# Executar um arquivo específico
+npx cypress run --spec cypress/e2e/login.cy.js
 
-- Use `data-cy` (ou `data-test`) como seletor principal nos testes para maior robustez.
-- Evite deixar `it.only` ou `describe.only` antes de commitar — eles isolam o teste e fazem a suíte ignorar os demais specs.
-- Coloque dados reutilizáveis em `cypress/fixtures/` e carregue com `cy.fixture()`.
-- Centralize comandos repetidos em `cypress/support/commands.js` (ex.: `cy.start()`, `cy.submitLoginForm()`, `cy.login()`).
+# Executar com configurações customizadas
+npx cypress run --config viewportWidth=1920,viewportHeight=1080
+```
 
-Exemplo de uso de fixture (no test):
+### Modo Interativo (Cypress Test Runner)
+```bash
+npx cypress open
+```
+
+## 📁 Estrutura do Projeto
+
+```
+cypress/
+├── e2e/                    # Arquivos de teste
+│   ├── alerts.cy.js       # Testes de alertas
+│   ├── cep.cy.js          # Testes de busca de CEP
+│   ├── consultacy.cy.js   # Testes de formulário de consultoria
+│   ├── gitHub.cy.js       # Testes de integração GitHub
+│   ├── hover.cy.js        # Testes de hover/interações
+│   ├── iframe.cy.js       # Testes com iframes
+│   ├── kanban.cy.js       # Testes de funcionalidade Kanban
+│   ├── links.cy.js        # Testes de links
+│   ├── login.cy.js        # Testes de autenticação
+│   └── studio.cy.js       # Testes do Cypress Studio
+├── fixtures/              # Dados de teste
+│   ├── cep.json          # Dados de CEP para testes
+│   ├── consultacy.json   # Dados para formulário de consultoria
+│   └── document.pdf      # Arquivo PDF para testes de upload
+└── support/              # Arquivos de suporte
+    ├── actions/          # Comandos customizados específicos
+    │   └── consultacy.actions.js
+    ├── commands.js       # Comandos customizados globais
+    ├── e2e.js           # Configurações globais
+    └── utils.js         # Funções utilitárias
+```
+
+## 🛠️ Comandos Customizados
+
+### Comandos Globais (`commands.js`)
+
+#### `cy.start()`
+Navega para a página inicial da aplicação.
+```javascript
+cy.start()
+```
+
+#### `cy.submitLoginForm(email, senha)`
+Preenche e submete o formulário de login.
+```javascript
+cy.submitLoginForm('papito@webdojo.com', 'katana123')
+```
+
+#### `cy.goTo(buttonName, pageTitle)`
+Navega para uma página específica através de um botão.
+```javascript
+cy.goTo('Consultoria', 'Consultoria')
+```
+
+#### `cy.login(ui = false)`
+Realiza login programático ou via interface.
+```javascript
+// Login via interface
+cy.login(true)
+
+// Login programático (padrão)
+cy.login()
+```
+
+### Comandos de Consultoria (`consultacy.actions.js`)
+
+#### `cy.fillConsultacyForm(form)`
+Preenche o formulário de consultoria com os dados fornecidos.
+```javascript
+cy.fillConsultacyForm(formData)
+```
+
+#### `cy.submitConsultacyForm()`
+Submete o formulário de consultoria.
+```javascript
+cy.submitConsultacyForm()
+```
+
+#### `cy.validadeConsultacyModal()`
+Valida a exibição do modal de confirmação.
+```javascript
+cy.validadeConsultacyModal()
+```
+
+## 📊 Fixtures
+
+### `consultacy.json`
+Contém dados estruturados para testes de consultoria:
+
+```json
+{
+  "Personal": {
+    "name": "Isaque Beltrão",
+    "email": "papito@webdojo.com.br",
+    "phone": "11 99999-1000",
+    "personType": "cpf",
+    "consultacyType": "Individual",
+    "document": "11289395098",
+    "discoveryChannel": ["Instagram", "YouTube", "LinkedIn"],
+    "file": "./cypress/fixtures/document.pdf",
+    "describe": "Lorem ipsum dolor sit amet,",
+    "techs": ["Playwright", "Cypress", "Selenium"],
+    "terms": true
+  },
+  "Company": {
+    // Dados para pessoa jurídica...
+  }
+}
+```
+
+### `cep.json`
+Dados para testes de busca de CEP:
+
+```json
+{
+  "cep": "04821000",
+  "street": "Avenida Presidente João Goulart",
+  "neighborhood": "Jardim Mália II",
+  "city": "São Paulo",
+  "state": "SP"
+}
+```
+
+## ⚙️ Configurações
+
+### `cypress.config.js`
+```javascript
+module.exports = defineConfig({
+  e2e: {
+    experimentalStudio: true,
+    video: true,
+    baseUrl: 'http://localhost:3000',
+    // viewportWidth: 1440,
+    // viewportHeight: 900
+  },
+});
+```
+
+### Configurações de Viewport
+- **Desktop**: 1440x900 (padrão)
+- **Mobile**: 375x667
+
+## 🧪 Cenários de Teste
+
+### Login (`login.cy.js`)
+- ✅ Login com credenciais válidas
+- ❌ Login com senha inválida
+- ❌ Login com email não cadastrado
+- ✅ Validação de cookies e localStorage
+- ✅ Verificação de elementos da interface
+
+### Consultoria (`consultacy.cy.js`)
+- ✅ Preenchimento de formulário pessoa física
+- ✅ Preenchimento de formulário pessoa jurídica
+- ✅ Upload de arquivos
+- ✅ Seleção múltipla de tecnologias
+- ✅ Validação de modal de confirmação
+
+### Outros Cenários
+- **CEP**: Busca e validação de endereços
+- **Alerts**: Interação com alertas do navegador
+- **Hover**: Testes de interações com hover
+- **iFrame**: Testes com elementos em iframes
+- **Links**: Validação de links externos
+- **GitHub**: Integração com API do GitHub
+- **Kanban**: Funcionalidades de quadro Kanban
+
+## 🔍 Utilitários
+
+### `utils.js`
+Função para obter data atual no formato brasileiro:
 
 ```javascript
-cy.fixture('cep').then(({ cep, street, neighborhood, city, state }) => {
-  cy.get('#cep').type(cep)
-  cy.contains('button', 'Buscar').click()
-  cy.get('#street').should('have.value', street)
-  // ...
-})
+export function getTodayDateBR() {
+  const today = new Date();
+  const day = String(today.getDate()).padStart(2, '0');
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const year = today.getFullYear();
+  return `${day}/${month}/${year}`;
+}
 ```
 
-## Dicas para tornar os testes determinísticos
+## 📱 Testes Responsivos
 
-- Stub/Mock de chamadas de rede: use `cy.intercept()` para controlar respostas externas (API de CEP, chamadas de login etc.).
-- Setar estado inicial via `cy.setCookie()` e `cy.visit(..., { onBeforeLoad(win) { win.localStorage.setItem(...) } })` para evitar depender de fluxos manuais.
-- Use asserts robustas: `should('contain.text', ...)` ou expressões regulares quando o texto pode variar levemente.
+O projeto suporta testes em diferentes resoluções:
 
-## Validação de formatos (exemplo: MD5)
+- **Desktop**: 1440x900
+- **Mobile**: 375x667
 
-Se você precisa validar formatos (por exemplo, token MD5), use uma regex no teste:
+Para executar testes mobile:
+```bash
+npm run test:login:mobile
+```
+
+## 🎥 Gravação de Vídeos
+
+Os testes são configurados para gravar vídeos automaticamente. Os vídeos são salvos na pasta `cypress/videos/` após a execução.
+
+## 🐛 Tratamento de Erros
+
+O projeto inclui tratamento para erros não capturados da aplicação:
 
 ```javascript
-cy.window().then((win) => {
-  const token = win.localStorage.getItem('token')
-  expect(token).to.match(/^[a-f0-9]{32}$/i)
-})
+Cypress.on('uncaught:exception', (err, runnable) => {
+  // Ignora erros não tratados da aplicação
+  return false;
+});
 ```
 
-## Integração com CI (exemplo simples GitHub Actions)
+## 📈 Relatórios
 
-Workflow mínimo (`.github/workflows/cypress.yml`):
+Após a execução dos testes, você pode encontrar:
 
-```yaml
-name: Cypress tests
-on: [push, pull_request]
-jobs:
-  cypress-run:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-      - name: Install
-        run: npm ci
-      - name: Build and serve app
-        run: |
-          npm run build # se você tiver script de build
-          npm run dev & # roda em background
-      - name: Run tests
-        run: npm test
-```
+- **Vídeos**: `cypress/videos/`
+- **Screenshots**: `cypress/screenshots/`
+- **Relatórios**: Console output com detalhes dos testes
 
-Adapte `build`/`serve` conforme a sua pipeline.
+## 🤝 Contribuição
 
-## Troubleshooting rápido
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/nova-funcionalidade`)
+3. Commit suas mudanças (`git commit -am 'Adiciona nova funcionalidade'`)
+4. Push para a branch (`git push origin feature/nova-funcionalidade`)
+5. Abra um Pull Request
 
-- Cypress falha com timeout em elementos: aumente o timeout ou prefira usar `cy.intercept()` para aguardar respostas.
-- Erro `beforeEach is not defined`: verifique typos nos hooks (`beforeEach`, `afterEach`, `before`, `after`).
-- `localStorage` undefined: use `onBeforeLoad` corretamente no `cy.visit` e garanta que a URL esteja correta.
+## 📝 Convenções
 
-## Boas práticas finais
+- Use `data-cy` attributes para seletores estáveis
+- Mantenha os testes independentes e isolados
+- Use fixtures para dados de teste
+- Documente comandos customizados
+- Siga o padrão de nomenclatura: `describe('Funcionalidade', () => {})`
 
-- Escreva testes pequenos e determinísticos — um comportamento por `it`.
-- Use fixtures e comandos customizados para reduzir duplicação.
-- Mantenha a suíte rápida: stub de rede sempre que possível.
+## 🔗 Links Úteis
 
+- [Documentação Oficial do Cypress](https://docs.cypress.io/)
+- [Cypress Real Events](https://github.com/dmtrKovalenko/cypress-real-events)
+- [Best Practices Cypress](https://docs.cypress.io/guides/references/best-practices)
+
+---
+
+**Desenvolvido com ❤️ para o aprendizado de automação de testes**
