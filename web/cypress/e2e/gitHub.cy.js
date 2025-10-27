@@ -53,7 +53,7 @@ describe('Gerenciamento de perfis no gitHub', () => {
         cy.contains('table tbody', profile.username)
             .should('not.exist')
     })
-        it.only('Deve validar o link do  gitHub', () => {
+        it('Deve validar o link do  gitHub', () => {
         const profile = {
             name: 'isaque França',
             username: 'isaqueBeltrao',

@@ -4,6 +4,9 @@ describe('iFrame', () => {
         cy.login()
         cy.contains('Video').click()
 
+        //think time
+        cy.wait(3000)
+        
         cy.get('iframe[title="Video Player"]')
             .should('exist')
             .its('0.contentDocument.body')
